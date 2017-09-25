@@ -1,6 +1,14 @@
 <template>
   <div class="recommend">
-      <div>
+      <div class="swiper-container">
+        <div class="swiper-wrapper">
+            <div v-for="item in recommendList" class="swiper-slide">
+                <a :href="item.linkUrl">
+                <img :src="item.picUrl">
+              </a>
+            </div>
+        </div>
+		   <div class="swiper-pagination"></div>
         <div class="recommend-list">
           <h1 class="list-title">热门歌单推荐</h1>
         </div>
@@ -13,18 +21,35 @@
 <script type="text/ecmascript-6">
  import {getRecommend} from '../../api/recommend'
  import {errOk} from '../../api/config'
+ import Swiper from '../../../static/swiper/swiper.min.js'
 
 export default {
    created () {
-     this.getRecommends()
+     this._getRecommends()
+   },
+   mounted () {
+     this._getLunBo()
+   },
+   data () {
+     return {
+       recommendList: []
+     }
    },
    methods: {
-     getRecommends () {
+     _getRecommends () {
        getRecommend().then((res) => {
          if (res.code === errOk) {
-           console.log(res.data.slider)
+           this.recommendList = res.data.slider
          }
        })
+     },
+
+     _getLunBo () {
+       var mySwiper = new Swiper('.swiper-container', {
+         pagination: '.swiper-pagination',
+         paginationClickable: true
+       })
+       console.log(mySwiper)
      }
    }
 }
@@ -32,7 +57,42 @@ export default {
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
   @import "~common/stylus/variable"
+  @import '../../../static/swiper/swiper.min.css'
+    html, body {
+        position: relative;
+        height: 100%;
+    }
+    body {
+        background: #eee;
+        font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+        font-size: 14px;
+        color:#000;
+        margin: 0;
+        padding: 0;
+    }
+    .swiper-container {
+        width: 100%;
+        height: 100%;
+    }
+    .swiper-slide {
+        text-align: center;
+        font-size: 18px;
+        background: #fff;
 
+        /* Center slide text vertically */
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-pack: center;
+        -ms-flex-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -ms-flex-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+    }
   .recommend
     position: fixed
     width: 100%
