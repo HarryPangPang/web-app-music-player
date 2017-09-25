@@ -3,9 +3,9 @@
       <div class="swiper-container">
         <div class="swiper-wrapper">
             <div v-for="item in recommendList" class="swiper-slide">
-                <a :href="item.linkUrl">
-                <img :src="item.picUrl">
-              </a>
+                <!-- <a :href="item.linkUrl"> -->
+                <img :src="item.picUrl" style="width:320px">
+                <!-- </a> -->
             </div>
         </div>
 		   <div class="swiper-pagination"></div>
@@ -60,25 +60,14 @@ export default {
   @import '../../../static/swiper/swiper.min.css'
     html, body {
         position: relative;
-        height: 100%;
     }
     body {
-        background: #eee;
         font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-        font-size: 14px;
-        color:#000;
         margin: 0;
         padding: 0;
     }
-    .swiper-container {
-        width: 100%;
-        height: 100%;
-    }
     .swiper-slide {
         text-align: center;
-        font-size: 18px;
-        background: #fff;
-
         /* Center slide text vertically */
         display: -webkit-box;
         display: -ms-flexbox;
