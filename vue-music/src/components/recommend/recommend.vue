@@ -3,7 +3,9 @@
     <div class="swiper-container">
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="item in recommendList">
+          <a :href="item.linkUrl">
             <img :src="item.picUrl" :style="{width: currentClientWidth +'px'}">
+          </a>
         </div>
       </div>
             <!-- 如果需要分页器 -->
@@ -19,7 +21,7 @@
 </template>
 
 <script type="text/ecmascript-6">
- import {getRecommend} from '../../api/recommend'
+ import {getRecommend, getDissLists} from '../../api/recommend'
  import {errOk} from '../../api/config'
  import Swiper from '../../../static/swiper-3.3.1.min.js'
  require('../../../static/swiper-3.3.1.min.css')
@@ -30,6 +32,7 @@ export default {
    },
    mounted () {
      this._getRecommends()
+     this._getDissLists()
      console.log('挂载好了')
      setTimeout(function () {
        var mySwiper = new Swiper('.swiper-container', {
@@ -46,6 +49,7 @@ export default {
    data () {
      return {
        recommendList: [],
+       dissLists: [],
        currentClientWidth: ''
      }
    },
@@ -57,9 +61,20 @@ export default {
          }
        })
      },
+     _getDissLists () {
+       getDissLists().then((res) => {
+         if (res.code === errOk) {
+           this.dissLists = res.data
+         }
+       })
+     },
      _getClientWidth () {
        this.currentClientWidth = document.body.clientWidth
      }
+   },
+  //  清理计时器，有利于内存释放
+   destroyed () {
+     clearTimeout(this.timer)
    }
 }
 </script>
@@ -71,7 +86,6 @@ export default {
     position: fixed
     width: 100%
     top: 88px
-    bottom: 0
     .recommend-content
       height: 100%
       overflow: hidden

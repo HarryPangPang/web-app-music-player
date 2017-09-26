@@ -12,3 +12,5 @@ css使用stylus编写
 跨域插件使用jsonp,npm可以直接install
 
 轮播图使用了swiper
+
+http 请求使用的axios
