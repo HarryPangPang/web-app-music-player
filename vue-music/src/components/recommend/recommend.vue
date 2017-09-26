@@ -1,19 +1,19 @@
 <template>
   <div class="recommend">
-      <div class="swiper-container">
-        <div class="swiper-wrapper">
-            <div v-for="item in recommendList" class="swiper-slide">
-                <!-- <a :href="item.linkUrl"> -->
-                <img :src="item.picUrl" style="width:320px">
-                <!-- </a> -->
-            </div>
-        </div>
-		   <div class="swiper-pagination"></div>
-        <div class="recommend-list">
-          <h1 class="list-title">热门歌单推荐</h1>
+    <div class="swiper-container">
+      <div class="swiper-wrapper">
+        <div class="swiper-slide" v-for="item in recommendList">
+            <img :src="item.picUrl" :style="{width: currentClientWidth +'px'}">
         </div>
       </div>
-      <div>
+            <!-- 如果需要分页器 -->
+      <div class="swiper-pagination"></div>
+      <!-- 如果需要导航按钮 -->
+      <!-- <div class="swiper-button-prev"></div>
+      <div class="swiper-button-next"></div> -->
+    </div>
+      <div class="recommend-list">
+        <h1 class="list-title">热门歌单推荐</h1>
       </div>
   </div>
 </template>
@@ -21,18 +21,32 @@
 <script type="text/ecmascript-6">
  import {getRecommend} from '../../api/recommend'
  import {errOk} from '../../api/config'
- import Swiper from '../../../static/swiper/swiper.min.js'
-
+ import Swiper from '../../../static/swiper-3.3.1.min.js'
+ require('../../../static/swiper-3.3.1.min.css')
+ 
 export default {
    created () {
-     this._getRecommends()
+     this._getClientWidth()
    },
    mounted () {
-     this._getLunBo()
+     this._getRecommends()
+     console.log('挂载好了')
+     setTimeout(function () {
+       var mySwiper = new Swiper('.swiper-container', {
+         pagination: '.swiper-pagination',
+         paginationClickable: true,
+         spaceBetween: 30,
+         centeredSlides: true,
+         autoplay: 2000,
+         autoplayDisableOnInteraction: false
+       })
+       console.log(mySwiper)
+     }, 2000)
    },
    data () {
      return {
-       recommendList: []
+       recommendList: [],
+       currentClientWidth: ''
      }
    },
    methods: {
@@ -43,13 +57,8 @@ export default {
          }
        })
      },
-
-     _getLunBo () {
-       var mySwiper = new Swiper('.swiper-container', {
-         pagination: '.swiper-pagination',
-         paginationClickable: true
-       })
-       console.log(mySwiper)
+     _getClientWidth () {
+       this.currentClientWidth = document.body.clientWidth
      }
    }
 }
@@ -57,31 +66,7 @@ export default {
 
 <style scoped lang="stylus" rel="stylesheet/stylus">
   @import "~common/stylus/variable"
-  @import '../../../static/swiper/swiper.min.css'
-    html, body {
-        position: relative;
-    }
-    body {
-        font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
-        margin: 0;
-        padding: 0;
-    }
-    .swiper-slide {
-        text-align: center;
-        /* Center slide text vertically */
-        display: -webkit-box;
-        display: -ms-flexbox;
-        display: -webkit-flex;
-        display: flex;
-        -webkit-box-pack: center;
-        -ms-flex-pack: center;
-        -webkit-justify-content: center;
-        justify-content: center;
-        -webkit-box-align: center;
-        -ms-flex-align: center;
-        -webkit-align-items: center;
-        align-items: center;
-    }
+
   .recommend
     position: fixed
     width: 100%
