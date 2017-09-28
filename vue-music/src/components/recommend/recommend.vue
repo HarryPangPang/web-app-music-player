@@ -14,8 +14,21 @@
       <!-- <div class="swiper-button-prev"></div>
       <div class="swiper-button-next"></div> -->
     </div>
+    <div class="recommend-content">
       <div class="recommend-list">
         <h1 class="list-title">热门歌单推荐</h1>
+          <ul>
+            <li v-for="item in dissLists" class="item">
+              <div class="icon">
+                <img width="60" height="60" :src="item.imgurl">
+              </div>
+              <div class="text">
+                <h2 class="name" v-text="item.creator.name"></h2>
+                <p class="desc" v-text="item.dissname"></p>
+              </div>
+            </li>
+          </ul>
+      </div>
       </div>
   </div>
 </template>
