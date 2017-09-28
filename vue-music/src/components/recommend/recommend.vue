@@ -1,6 +1,6 @@
 <template>
   <div class="recommend">
-    <div class="swiper-container">
+    <div class="swiper-container recommend-content">
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="item in recommendList">
           <a :href="item.linkUrl">
