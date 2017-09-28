@@ -41,7 +41,8 @@ export default {
          spaceBetween: 30,
          centeredSlides: true,
          autoplay: 2000,
-         autoplayDisableOnInteraction: false
+         autoplayDisableOnInteraction: false,
+         loop: true
        })
        console.log(mySwiper)
      }, 2000)
@@ -61,10 +62,12 @@ export default {
          }
        })
      },
+    //  获取歌单列表
      _getDissLists () {
        getDissLists().then((res) => {
          if (res.code === errOk) {
-           this.dissLists = res.data
+           this.dissLists = res.data.list
+           console.log(this.dissLists)
          }
        })
      },

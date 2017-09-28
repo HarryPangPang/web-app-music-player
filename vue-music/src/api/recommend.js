@@ -14,6 +14,7 @@ export function getRecommend () {
   return jsonp(url, data, option1)
 }
 
+// 使用axios请求获取歌单列表
 export function getDissLists () {
   const url = '/api/getDissLists'
   const data = Object.assign({}, commonParam, {

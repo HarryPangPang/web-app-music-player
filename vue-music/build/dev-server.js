@@ -25,6 +25,7 @@ var app = express()
 var compiler = webpack(webpackConfig)
 
 // 使用express框架来进行node的http请求
+// 后端接口代理设置start
 var apiRoutes = express.Router()
 apiRoutes.get('/getDissLists', function (req, res) {
   var url = 'https://c.y.qq.com/splcloud/fcgi-bin/fcg_get_diss_by_tag.fcg'
@@ -42,6 +43,7 @@ apiRoutes.get('/getDissLists', function (req, res) {
 })
 
 app.use('/api', apiRoutes)
+// 后端接口代理设置end
 
 var devMiddleware = require('webpack-dev-middleware')(compiler, {
   publicPath: webpackConfig.output.publicPath,
