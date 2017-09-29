@@ -103,7 +103,7 @@ export default {
      _getClientWidth () {
        this.currentClientWidth = document.body.clientWidth
      },
-    //  判断图片是否加载
+    //  判断图片是否加载来判断是否refresh进行优化
      loadImage () {
        if (!this.checkLoaded) {
          this.checkLoaded = true

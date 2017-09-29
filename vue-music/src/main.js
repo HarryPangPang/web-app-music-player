@@ -9,7 +9,7 @@ import VueLazyload from 'vue-lazyload'
 Vue.use(VueLazyload, {
   preLoad: 1,
   error: '加载失败',
-  loading: require('./images/loading.gif'),
+  loading: require('./assets/images/loading.gif'),
   attempt: 1
 })
 
