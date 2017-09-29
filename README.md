@@ -16,3 +16,5 @@ css使用stylus编写
 http 请求使用的axios
 
 滚动插件使用betterscroll
+
+懒加载图片使用的vue-lazyload插件

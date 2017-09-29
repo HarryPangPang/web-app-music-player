@@ -6,7 +6,7 @@
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="item in recommendList">
           <a :href="item.linkUrl">
-            <img :src="item.picUrl" :style="{width: currentClientWidth +'px'}">
+            <img @load="loadImage" :src="item.picUrl" :style="{width: currentClientWidth +'px'}">
           </a>
         </div>
       </div>
@@ -23,7 +23,7 @@
           <ul class="content">
             <li v-for="item in dissLists" class="item">
               <div class="icon">
-                <img width="60" height="60" :src="item.imgurl">
+                <img width="60" height="60" v-lazy="item.imgurl">
               </div>
               <div class="text">
                 <h2 class="name" v-text="item.creator.name"></h2>
@@ -35,6 +35,10 @@
       </div>
     </div>
       </div>
+      <!-- 载入组件 -->
+      <div class="loading-container" v-show="!dissLists.length">
+        <Loading></Loading>
+      </div>
     </scroll>
   </div>
 </template>
@@ -45,17 +49,19 @@
  import Swiper from '../../../static/swiper-3.3.1.min.js'
  require('../../../static/swiper-3.3.1.min.css')
  import scroll from '../../base/scroll/scroll'
+ import Loading from '../../base/loading/loading'
  
 export default {
    components: {
-     scroll
+     scroll,
+     Loading
    },
    created () {
      this._getClientWidth()
-   },
-   mounted () {
      this._getRecommends()
      this._getDissLists()
+   },
+   mounted () {
     //  console.log('挂载好了')
      setTimeout(function () {
        var mySwiper = new Swiper('.swiper-container', {
@@ -96,6 +102,13 @@ export default {
      },
      _getClientWidth () {
        this.currentClientWidth = document.body.clientWidth
+     },
+    //  判断图片是否加载
+     loadImage () {
+       if (!this.checkLoaded) {
+         this.checkLoaded = true
+         this.$refs.scroll.refresh()
+       }
      }
    },
   //  清理计时器，有利于内存释放
