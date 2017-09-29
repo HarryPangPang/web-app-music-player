@@ -14,3 +14,5 @@ css使用stylus编写
 轮播图使用了swiper
 
 http 请求使用的axios
+
+滚动插件使用betterscroll

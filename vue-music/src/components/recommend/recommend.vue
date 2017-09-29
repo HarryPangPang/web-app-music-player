@@ -1,5 +1,7 @@
 <template>
   <div class="recommend">
+    <scroll ref="scroll" :data="dissLists">
+      <div>
     <div class="swiper-container recommend-content">
       <div class="swiper-wrapper">
         <div class="swiper-slide" v-for="item in recommendList">
@@ -14,10 +16,11 @@
       <!-- <div class="swiper-button-prev"></div>
       <div class="swiper-button-next"></div> -->
     </div>
-    <div class="recommend-content">
+    <div class="recommend-content" >
+      <div>
       <div class="recommend-list">
         <h1 class="list-title">热门歌单推荐</h1>
-          <ul>
+          <ul class="content">
             <li v-for="item in dissLists" class="item">
               <div class="icon">
                 <img width="60" height="60" :src="item.imgurl">
@@ -30,6 +33,9 @@
           </ul>
       </div>
       </div>
+    </div>
+      </div>
+    </scroll>
   </div>
 </template>
 
@@ -38,15 +44,19 @@
  import {errOk} from '../../api/config'
  import Swiper from '../../../static/swiper-3.3.1.min.js'
  require('../../../static/swiper-3.3.1.min.css')
+ import scroll from '../../base/scroll/scroll'
  
 export default {
+   components: {
+     scroll
+   },
    created () {
      this._getClientWidth()
    },
    mounted () {
      this._getRecommends()
      this._getDissLists()
-     console.log('挂载好了')
+    //  console.log('挂载好了')
      setTimeout(function () {
        var mySwiper = new Swiper('.swiper-container', {
          pagination: '.swiper-pagination',
@@ -57,7 +67,7 @@ export default {
          autoplayDisableOnInteraction: false,
          loop: true
        })
-       console.log(mySwiper)
+       return mySwiper
      }, 2000)
    },
    data () {
@@ -80,7 +90,7 @@ export default {
        getDissLists().then((res) => {
          if (res.code === errOk) {
            this.dissLists = res.data.list
-           console.log(this.dissLists)
+          //  console.log(this.dissLists)
          }
        })
      },
@@ -99,7 +109,7 @@ export default {
   @import "~common/stylus/variable"
 
   .recommend
-    position: fixed
+    // position: fixed
     width: 100%
     top: 88px
     .recommend-content
@@ -121,6 +131,7 @@ export default {
           box-sizing: border-box
           align-items: center
           padding: 0 20px 20px 20px
+          height: 83px
           .icon
             flex: 0 0 60px
             width: 60px
